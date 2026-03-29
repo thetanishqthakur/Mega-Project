@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
@@ -23,18 +22,19 @@ function App() {
     .finally(()=> setLoading(false));
   }, []);
 
-  return !loading ? (
-    <div className="min-h-screen flex flex-wrap content-between bg-gray-400"> 
-    <div className="w-full block">
-      <Header/>
-      <main>
-       TODO <Outlet/>  
-      </main>
-      <Footer/>
+return !loading ? (
+  // 1. GLOBAL LAYOUT: flex-col banaya taaki ek ke neeche ek aayen, aur background yahan set kiya
+  <div className="min-h-screen flex flex-col bg-purple-50/30 font-sans">
+    <Header />
 
-    </div>
-    </div>
-  ) : (null)
+    {/* 2. FLEX-GROW MAGIC: Yeh beech ki khali jagah ko bhar lega aur Footer ko neeche dhakel dega */}
+    <main className="flex grow">
+      <Outlet />
+    </main>
+
+    <Footer />
+  </div>
+) : null;
 }
 
 export default App;

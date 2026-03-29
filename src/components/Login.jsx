@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import authService from "./../appwrite/auth";
 import { useForm } from "react-hook-form";
 
-
-
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,6 +15,13 @@ function Login() {
   const login = async (data) => {
     setError("");
     try {
+      try {
+        await authService.logout();
+        console.log("Purana atka hua session kill kar diya!");
+      } catch (error) {
+        console.log("Koi purana session nahi tha, aage badhte hain.");
+      }
+
       const session = await authService.login(data);
       if (session) {
         const userData = await authService.getCurrentUser();
